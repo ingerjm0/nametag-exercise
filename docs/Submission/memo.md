@@ -4,11 +4,11 @@ The existing documentation is a good starting point, but needs refinement in a f
 
 1. Add additional content to address missing and unclear descriptions of webhooks and how to implement them
 2. Resolve conflicts and ambiguities in the webhook behavior, particularly surrounding the new v2 release
-3. Organize content around the developer's workflow. A new structure will address issues in support tickets and the developer experience instead of organizing the page around isolated technical topics.
+3. Organize content around the developer's workflow. A new structure will address issues in support tickets and the developer experience, rather than organizing the page around isolated technical topics.
 
 :::note
 
-While working, I identified additional questions and comments in the footnotes[^1] of [Webhooks Documentation](docs/webhooks-v2). In a live environment, we'd discuss these in the parking lot, over Slack, or through PR comments. 
+While working, I identified additional questions and comments in the footnotes[^1] of [Webhooks Documentation](/docs/webhooks-v2). In a live environment, we'd discuss these in the parking lot, over Slack, or through PR comments. 
 
 :::
 
@@ -25,7 +25,7 @@ Here are a few thoughts on how I run documentation programs to ensure that situa
     - SME/Engineer: Reviews content for contextual accuracy, missing details, or obsolete information
     - Docs Engineer: Develops the systems that the documentation is authored, stored, hosted, and published
 
-2. **Collaboration**: The technical writer (or team) _must_ have visibility into the development cycle and priorities. By participating in standups and status updates, reaching out for help, and reviewing upcoming release goals, the technical writer (me) will build trust with the engineering team to keep things moving smoothly. This also goes for other departments - working with Marketing on promoting new features, PMO on aligning documentation and engineering deliverables, QA on reporting and repro'ing bugs. 
+2. **Collaboration**: The technical writer (or team) _must_ have visibility into the development cycle and priorities. By participating in standups and status updates, reaching out for help, and reviewing upcoming release goals, the technical writer (me) will build trust with the engineering team to keep things moving smoothly. This also goes for other departments - working with Marketing on promoting new features, PMO on aligning documentation and engineering deliverables, and QA on reporting and repro'ing bugs. 
 
 3. **Standard Procedures and Style Guides**: Ensuring that folks are familiar with  the logistics of how the documentation program is run ensures consistency, improves communication, and drives everyone to the same goal of quality documentation. 
 
