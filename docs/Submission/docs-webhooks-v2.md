@@ -23,7 +23,7 @@ Nametag webhooks send HTTP POST requests to your endpoint when subscribed verifi
 
 :::warning
 
-The signing secret is displayed only once, and you will be unable to see if again after navigating away. In the event you lose it, you'll need to rotate it.
+The signing secret is displayed only once, and you will be unable to see it again after navigating away. If you lose it, you'll need to rotate it.
 
 :::
 
@@ -37,13 +37,13 @@ Your endpoint must be publicly reachable over HTTPS and respond within 10 second
 
 [^3]: Rewrote section after verifying the signature scheme update in the Slack thread; addresses tickets NT-1019, NT-1023, NT-1034
 
-Nametag signs webhook requests so you can verify that they came from Nametag and have not been modified in transit. It is recommended that you verify the signature before processing any event.
+Nametag signs webhook requests so you can verify they came from Nametag and haven't been modified in transit. We recommend verifying the signature before processing any event.
 
 :::warning 
 
 **Migration notice: Update your webhook headers by June 1, 2026.**
 
-Previous versions of Nametag used the `X-Nametag-Timestamp` and `X-Nametag-Signature` headers. For backward compatibility, Nametag will continue to support these legacy headers for a limited time. All integrations must migrate to Nametag-Timestamp and Nametag-Signature by June 1, 2026. After this date, the legacy headers will no longer be supported, and integrations that rely on them may fail to verify webhook requests.
+Previous versions of Nametag used the `X-Nametag-Timestamp` and `X-Nametag-Signature` headers. For backward compatibility, Nametag will continue to support these legacy headers for a limited time. All integrations must migrate to Nametag-Timestamp and Nametag-Signature by June 1, 2026. After this date, we will no longer support the legacy headers, and integrations that rely on them may fail to verify webhook requests.
 
 :::
 
@@ -56,7 +56,7 @@ Nametag uses **HMAC-SHA256** to sign the timestamp and raw request body. Each re
 
 **Verify the signature**
 
-To verify the signation, ensure you read the raw request body as bytes. Do not parse and re-serialize the JSON, as changes to whitespace or key order will cause signature verification to fail.
+To verify the signature, ensure you read the raw request body as bytes. Do not parse and re-serialize the JSON, as changes to whitespace or key order will cause signature verification to fail.
 
 1. Read the Nametag-Timestamp header.
 2. Construct the signed message by concatenating the timestamp, a period (.), and the raw request body bytes.
@@ -68,11 +68,11 @@ To verify the signation, ensure you read the raw request body as bytes. Do not p
 
 To protect against replay attacks, reject requests where the `Nametag-Timestamp` differs from your server's current Unix timestamp by more than 5 minutes. Perform this check in addition to signature verification.
 
-In addition, keep your server clock synchronized so legitimate requests are not rejected due to deviations in the clock mechanics.
+Also, keep your server clock synchronized so legitimate requests aren't rejected due to clock drift.
 
 Example (Python):[^4]
 
-[^4]: I'd love to keep a code sample, but would need to verify with the engineers before adding it. Its better to remove it then add one that doesn't work correctly.
+[^4]: I'd love to keep a code sample, but would need to verify with the engineers before adding it. It's better to remove it than add one that doesn't work correctly.
 
 ## Handling webhook events[^5]
 
@@ -82,7 +82,7 @@ Nametag v2 event payloads use a `type` field to identify the event and a `data` 
 
 ## Retrying failed webhook deliveries[^6]
 
-[^6]: Replace the old three-retry policy with eight attempts over 24 hours, as explained in Slack thread; addresses ticket NT-1031
+[^6]: Replace the old three-retry policy with eight attempts over 24 hours, as explained in the Slack thread; addresses ticket NT-1031
 
 Nametag retries failed webhook deliveries using exponential backoff. The current delivery schedule consists of eight attempts over 24 hours:
 
@@ -103,7 +103,7 @@ A delivery is retried if the endpoint times out or returns a non-2xx response, e
 
 If a delivery fails, inspect the endpoint's delivery log in the Console. Failed events are retained for seven days and can be replayed from the delivery log.[^8]
 
-[^8]: Came from runbook - accuracy is unknown and needs to be confirmed with engineer.
+[^8]: Came from runbook - accuracy is unknown and needs to be confirmed with an engineer.
 
 ## Testing your integration
 
