@@ -20,13 +20,13 @@ jobs:
       - uses: actions/setup-node@v4
         with:
           node-version: 21
-          cache: yarn
+          cache: npm
 
       - name: Install dependencies
-        run: yarn install --frozen-lockfile
+        run: npm ci
 
       - name: Build website
-        run: yarn build
+        run: npm run build
 
       # Popular action to deploy your build artifacts to the gh-pages branch
       - name: Deploy to GitHub Pages
