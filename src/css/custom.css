@@ -44,3 +44,7 @@ html {
   margin-left: 4px;
   font-size: .9em;
 }
+
+blockquote {
+  margin-left: 1em;
+}

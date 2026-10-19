@@ -4,15 +4,9 @@ const sidebars = {
     {
       type: 'category',
       label: 'Exercise Submission',
-      link: {
-        type: 'generated-index',
-        title: 'Completed Assignment Materials',
-        description: 'Find all submitted assignment materials below.',
-        image: 'img/doc-rescue.png',
-      },
       items: [
         'Submission/memo',
-        'Submission/webhooks-docs', 
+        'Submission/docs-webhooks-v2', 
         'Submission/disposition-list', 
         'Submission/gap-list', 
         'Submission/retrieval-test'],
