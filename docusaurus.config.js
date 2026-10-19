@@ -67,13 +67,7 @@ const config = {
         },
         items: [
           {
-            type: 'docSidebar',
-            sidebarId: 'tutorialSidebar',
-            position: 'left',
-            label: 'Source Materials',
-          },
-          {
-            href: 'https://github.com/facebook/docusaurus',
+            href: 'https://github.com/ingerjm0/nametag-exercise',
             label: 'GitHub',
             position: 'right',
           },
