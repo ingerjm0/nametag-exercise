@@ -1,0 +1,61 @@
+#eng-platform
+Exported 2026-08-19 by h.tedder-king
+Thread started 2026-02-20
+
+---
+
+[2026-02-20 09:41] Priya Raghavan
+heads up for anyone fielding webhook questions after the v2 rollout — the signature scheme changed too and I don't think it made the release notes
+
+[2026-02-20 09:42] Priya Raghavan
+old: X-Nametag-Signature, HMAC-SHA1 over the raw body
+new: Nametag-Signature, HMAC-SHA256 over `{timestamp}.{raw_body}`, hex encoded
+and we send the timestamp separately in a Nametag-Timestamp header (unix seconds)
+
+[2026-02-20 09:43] Priya Raghavan
+so the string you sign is literally the timestamp, then a period, then the raw body bytes. that's it.
+
+[2026-02-20 09:47] Dan Osei
+wait we dropped SHA1 entirely?
+
+[2026-02-20 09:48] Priya Raghavan
+yes. SHA1 signing was flagged in the Q4 security review. v2 endpoints are SHA256 only.
+
+[2026-02-20 09:49] Dan Osei
+what happens to everyone on the old header
+
+[2026-02-20 09:52] Priya Raghavan
+we're dual-sending during the migration window. both X-Nametag-Signature (sha1, body only) and Nametag-Signature (sha256, timestamp.body) go out on every delivery. old header comes off on 2026-06-01, same as the rest of the v1 sunset work.
+
+[2026-02-20 09:53] Priya Raghavan
+after that date the sha1 header is gone and anything still verifying against it breaks hard.
+
+[2026-02-20 10:04] Dan Osei
+should we be telling customers to check the timestamp for replay protection
+
+[2026-02-20 10:06] Priya Raghavan
+yes — reject anything where Nametag-Timestamp is more than 5 minutes off their own clock. that's the whole point of moving the timestamp into the signed string. I'd say that's required, not optional, but nobody's written it down anywhere customer-facing.
+
+[2026-02-20 10:07] Dan Osei
+noted. filing a docs ticket
+
+[2026-02-20 10:31] Priya Raghavan
+also while we're here, the retry numbers floating around are wrong in at least two places. current behavior is 8 attempts over 24 hours with exponential backoff. schedule is roughly:
+
+immediate, +30s, +2m, +10m, +45m, +3h, +8h, +12h
+
+[2026-02-20 10:32] Priya Raghavan
+and 410 Gone is special — if the endpoint returns 410 we stop retrying immediately and disable the endpoint. that's intentional, it's how you tell us to stop. any other 4xx we keep retrying.
+
+[2026-02-20 10:35] Dan Osei
+is that in the docs
+
+[2026-02-20 10:35] Priya Raghavan
+no
+
+[2026-02-20 14:02] Marcus Feld
++1 to writing this down, I explained the timestamp thing to two customers this week
+
+---
+
+[thread ends]
